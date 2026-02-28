@@ -1,6 +1,6 @@
 {
-    "name": "挨拶アプリ",
-    "short_name": "挨拶",
+    "name": "こんにちは",
+    "short_name": "こんにちは",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#f0f0f0",
@@ -12,4 +12,5 @@
             "type": "image/png"
         }
     ]
+
 }
