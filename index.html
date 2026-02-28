@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>挨拶アプリ</title>
+    <title>速度計算アプリ</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        /* 画面の中央に文字を配置する設定 */
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding-top: 50px;
+            font-family: sans-serif;
             background-color: #f0f0f0;
         }
-        h1 {
-            font-size: 3rem;
-            color: #333;
+        input, button {
+            font-size: 1.2rem;
+            margin: 10px;
+            padding: 10px;
+        }
+        #result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>こんにちは</h1>
+    <h2>ノット → 時速 計算</h2>
+    
+    <div>
+        <input type="number" id="knotsInput" placeholder="ノットを入力" value="10">
+        <button onclick="calculateSpeed()">計算する</button>
+    </div>
+
+    <div id="result"></div>
 
     <script>
+        // ボタンが押された時に実行されるJavaScript
+        async function calculateSpeed() {
+            const knots = document.getElementById('knotsInput').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerText = "計算中...";
+
+            try {
+                // PythonのAPIへデータを送信して結果を待つ
+                const response = await fetch(`/api/speed?knots=${knots}`);
+                const data = await response.json();
+                
+                // Pythonから返ってきたテキストを画面に表示する
+                resultDiv.innerText = data.message;
+            } catch (error) {
+                resultDiv.innerText = "エラーが発生しました";
+            }
+        }
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
-</html>
+</html>s
